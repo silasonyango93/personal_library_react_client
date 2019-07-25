@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import axios from "axios";
+import querystring from "query-string";
+import ip from "../../config/EndPoint.js";
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -8,20 +11,51 @@ class Register extends React.Component {
             MiddleName: '',
             Surname: '',
             Email: '',
-            Password: '',
-            login_error:true,
-            login_credentials:[]
+            Password: ''
 
         };
 
 
-        /*this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);*/
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
+    }
+
+
+    handleSubmit(event){
+        event.preventDefault();
+
+
+
+        axios.post(ip+'/create_user', querystring.stringify({
+            UserId: 0,
+            firstName: this.state.FirstName,
+            middleName: this.state.MiddleName,
+            surname: this.state.Surname,
+            email: this.state.Email,
+            password: this.state.Password }))
+            .then((response) => {
+
+            } )
+            .catch((response) => {
+                //handle error
+                console.log(response);
+            });
 
     }
 
 
 
+
+    handleChange(event) {
+        let newState = this.state
+        newState[event.target.name] = event.target.value
+        let prop = event.target.name
+        this.setState({
+            ...newState
+        });
+
+    }
 
 
     render() {
