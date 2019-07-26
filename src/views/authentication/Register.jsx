@@ -35,7 +35,7 @@ class Register extends React.Component {
             email: this.state.Email,
             password: this.state.Password }))
             .then((response) => {
-
+                console.log(response);
             } )
             .catch((response) => {
                 //handle error
@@ -61,9 +61,6 @@ class Register extends React.Component {
     render() {
         return (
             <div>
-                <Router>
-                    <Route path="/login" component={Register} />
-                </Router>
                 <div className="container login-card">
                     <div className="row">
                         <div className="col-md-4 col-md-offset-4">
