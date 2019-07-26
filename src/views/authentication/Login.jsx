@@ -15,6 +15,7 @@ class Login extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.login = this.login.bind(this);
 
     }
 
@@ -24,14 +25,15 @@ class Login extends React.Component {
 
 
 
-        axios.post(ip+'/signin',
+        axios.post(ip+'/user/get_by_email',
 
             {
-            attemptedEmail: this.state.attemptedEmail,
-            attemptedPassword: this.state.attemptedPassword }
+            attemptedEmail: this.state.attemptedEmail }
         )
             .then((response) => {
-                console.log(response);
+                if(response.data){
+                    this.login();
+                }else { alert("User or password is incorrect"); }
             } )
             .catch((response) => {
                 //handle error
@@ -41,7 +43,22 @@ class Login extends React.Component {
     }
 
 
+    login() {
+        axios.post(ip+'/user/authenticate',
 
+            {
+                    attemptedEmail: this.state.attemptedEmail,
+                    attemptedPassword: this.state.attemptedPassword
+                  }
+            )
+            .then((response) => {
+                console.log(response);
+            } )
+            .catch((response) => {
+                //handle error
+                console.log(response);
+            });
+    }
 
     handleChange(event) {
         let newState = this.state

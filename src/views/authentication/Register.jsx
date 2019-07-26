@@ -27,7 +27,7 @@ class Register extends React.Component {
 
 
 
-        axios.post(ip+'/create_user', querystring.stringify({
+        axios.post(ip+'/user/create_user', querystring.stringify({
             UserId: 0,
             firstName: this.state.FirstName,
             middleName: this.state.MiddleName,
