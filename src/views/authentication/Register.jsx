@@ -18,6 +18,7 @@ class Register extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.createUser = this.createUser.bind(this);
 
     }
 
@@ -25,8 +26,25 @@ class Register extends React.Component {
     handleSubmit(event){
         event.preventDefault();
 
+        axios.post(ip+'/user/get_by_email',
+
+            {
+                attemptedEmail: this.state.Email }
+        )
+            .then((response) => {
+                if(response.data){
+                    alert("A user already exists by this email address");
+                }else { this.createUser(); }
+            } )
+            .catch((response) => {
+                //handle error
+                console.log(response);
+            });
+
+    }
 
 
+    createUser() {
         axios.post(ip+'/user/create_user', querystring.stringify({
             UserId: 0,
             firstName: this.state.FirstName,
@@ -41,11 +59,7 @@ class Register extends React.Component {
                 //handle error
                 console.log(response);
             });
-
     }
-
-
-
 
     handleChange(event) {
         let newState = this.state

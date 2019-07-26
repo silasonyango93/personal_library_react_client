@@ -9,6 +9,11 @@
 .login-card {
   padding-top: 4rem;
 }
+
+.sign-up-link {
+  text-align: center;
+}
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;

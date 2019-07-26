@@ -16,6 +16,7 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.login = this.login.bind(this);
+        this.signUpLinkClicked = this.signUpLinkClicked.bind(this);
 
     }
 
@@ -71,6 +72,11 @@ class Login extends React.Component {
     }
 
 
+    signUpLinkClicked() {
+        this.props.history.push('/register');
+    }
+
+
     render() {
         return (
             <div>
@@ -104,7 +110,7 @@ class Login extends React.Component {
                     </div>
                 </div>
 
-
+                <p className="sign-up-link" onClick={this.signUpLinkClicked}><a href="">Or Sign Up With Us</a></p>
             </div>
         );
     }
