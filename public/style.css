@@ -5,6 +5,25 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+.landing-card {
+  text-align: center;
+}
+
+.second-level {
+  padding-left: 2rem;
+}
+
+li {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e7e7e7;
+}
+
+.side-bar {
+  float: left;
+  width: 20% !important;
+  height: 100% !important;
+}
 
 .login-card {
   padding-top: 4rem;
@@ -4190,8 +4209,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-collapse {
-  padding-right: 15px;
-  padding-left: 15px;
   overflow-x: visible;
   -webkit-overflow-scrolling: touch;
   border-top: 1px solid transparent;

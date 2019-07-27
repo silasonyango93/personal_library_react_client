@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import querystring from "querystring";
 import ip from "../../config/EndPoint.js";
-class Login extends React.Component {
+import SideBar from "../../components/sidebar/SideBar.jsx";
+
+class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +19,6 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.login = this.login.bind(this);
         this.signUpLinkClicked = this.signUpLinkClicked.bind(this);
-        this.successfulLogin = this.successfulLogin.bind(this);
 
     }
 
@@ -30,7 +31,7 @@ class Login extends React.Component {
         axios.post(ip+'/user/get_by_email',
 
             {
-            attemptedEmail: this.state.attemptedEmail }
+                attemptedEmail: this.state.attemptedEmail }
         )
             .then((response) => {
                 if(response.data){
@@ -49,14 +50,12 @@ class Login extends React.Component {
         axios.post(ip+'/user/authenticate',
 
             {
-                    attemptedEmail: this.state.attemptedEmail,
-                    attemptedPassword: this.state.attemptedPassword
-                  }
-            )
+                attemptedEmail: this.state.attemptedEmail,
+                attemptedPassword: this.state.attemptedPassword
+            }
+        )
             .then((response) => {
-                if(response.data.success === true) {
-                    this.successfulLogin();
-                }else { alert("Wrong user name or password");}
+                console.log(response);
             } )
             .catch((response) => {
                 //handle error
@@ -79,20 +78,20 @@ class Login extends React.Component {
         this.props.history.push('/register');
     }
 
-    successfulLogin() {
-        this.props.history.push('/home');
-    }
-
 
     render() {
         return (
             <div>
-                <div className="container login-card">
-                    <div className="row">
-                        <div className="col-md-4 col-md-offset-4">
+
+                <div className="login-card">
+                    <div className="col-md-4 side-bar">
+                        <SideBar/>
+                    </div>
+
+                        <div className="col-md-4 container">
                             <div className="login-panel panel panel-default">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">Sign In</h3>
+                                    <h3 className="panel-title">Home</h3>
                                 </div>
                                 <div class="panel-body">
                                     <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
@@ -114,7 +113,7 @@ class Login extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
 
                 <p className="sign-up-link" onClick={this.signUpLinkClicked}><a href="">Or Sign Up With Us</a></p>
@@ -123,4 +122,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Home;
