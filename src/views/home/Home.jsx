@@ -4,55 +4,32 @@ import axios from "axios";
 import querystring from "querystring";
 import ip from "../../config/EndPoint.js";
 import SideBar from "../../components/sidebar/SideBar.jsx";
+import TopBar from "../../components/topbar/TopBar.jsx";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            attemptedEmail: '',
-            attemptedPassword: ''
+            resourceTypeName: '',
+            resourceTypeDescription: '',
+            userId: window.sessionStorage.getItem("userId")
 
         };
 
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.login = this.login.bind(this);
-        this.signUpLinkClicked = this.signUpLinkClicked.bind(this);
-
     }
 
 
     handleSubmit(event){
         event.preventDefault();
-
-
-
-        axios.post(ip+'/user/get_by_email',
-
+        axios.post(ip+'/resource_types/create_resource_type',
             {
-                attemptedEmail: this.state.attemptedEmail }
-        )
-            .then((response) => {
-                if(response.data){
-                    this.login();
-                }else { alert("User or password is incorrect"); }
-            } )
-            .catch((response) => {
-                //handle error
-                console.log(response);
-            });
+                userId: this.state.userId,
+                resourceTypeName: this.state.resourceTypeName,
+                resourceTypeDescription: this.state.resourceTypeDescription}
 
-    }
-
-
-    login() {
-        axios.post(ip+'/user/authenticate',
-
-            {
-                attemptedEmail: this.state.attemptedEmail,
-                attemptedPassword: this.state.attemptedPassword
-            }
         )
             .then((response) => {
                 console.log(response);
@@ -61,7 +38,9 @@ class Home extends React.Component {
                 //handle error
                 console.log(response);
             });
+
     }
+
 
     handleChange(event) {
         let newState = this.state
@@ -74,40 +53,38 @@ class Home extends React.Component {
     }
 
 
-    signUpLinkClicked() {
-        this.props.history.push('/register');
-    }
-
 
     render() {
         return (
             <div>
-
+                <TopBar />
                 <div className="login-card">
                     <div className="col-md-4 side-bar">
                         <SideBar/>
                     </div>
 
-                        <div className="col-md-4 container">
-                            <div className="login-panel panel panel-default">
+                        <div className="col-md-4 login-panel">
+                            <div className=" panel panel-default">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">Home</h3>
+                                    <h3 className="panel-title">Resource Types</h3>
                                 </div>
                                 <div class="panel-body">
                                     <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
                                         <fieldset>
 
                                             <div className="form-group">
-                                                <input name="attemptedEmail" className="form-control"
-                                                       placeholder="Email" value={this.state.attemptedEmail} type="text"
+                                                <input name="resourceTypeName" className="form-control"
+                                                       placeholder="E.g Book, DVD etc" value={this.state.resourceTypeName} type="text"
                                                        onChange={this.handleChange} autoFocus/>
                                             </div>
 
                                             <div className="form-group">
-                                                <input name="attemptedPassword" className="form-control" placeholder="Password" value={this.state.attemptedPassword} type="password" onChange={this.handleChange} />
+                                                <textarea name="resourceTypeDescription" className="form-control"
+                                                       placeholder="Further description describing the category" value={this.state.resourceTypeDescription} type="text"
+                                                       onChange={this.handleChange} autoFocus/>
                                             </div>
 
-                                            <button type="submit" className="btn btn-lg btn-success btn-block">Sign In</button>
+                                            <button type="submit" className="btn btn-lg btn-success btn-block">Submit</button>
                                         </fieldset>
                                     </form>
                                 </div>
@@ -116,7 +93,7 @@ class Home extends React.Component {
 
                 </div>
 
-                <p className="sign-up-link" onClick={this.signUpLinkClicked}><a href="">Or Sign Up With Us</a></p>
+
             </div>
         );
     }

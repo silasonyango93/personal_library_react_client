@@ -32,7 +32,8 @@ class Register extends React.Component {
                 attemptedEmail: this.state.Email }
         )
             .then((response) => {
-                if(response.data){
+                console.log(response);
+                if(response.data.length > 0){
                     alert("A user already exists by this email address");
                 }else { this.createUser(); }
             } )
@@ -113,10 +114,10 @@ class Register extends React.Component {
 
 
                                             <button type="submit" className="btn btn-lg btn-success btn-block">Sign Up</button>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
+                    </fieldset>
+                </form>
+            </div>
+            </div>
                         </div>
                     </div>
                 </div>

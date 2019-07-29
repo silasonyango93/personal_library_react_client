@@ -20,7 +20,7 @@ class Sidebar extends Component {
             <div className="navbar-default sidebar" style={{ marginLeft: '-20px' }} role="navigation">
                 <div className="sidebar-nav navbar-collapse collapse">
                     <ul className="nav in" id="side-menu">
-                        <li className="sidebar-search">
+                        <li>
                             <div className="input-group custom-search-form">
                                 <input type="text" className="form-control" placeholder="Search..." />
                                 <span className="input-group-btn">

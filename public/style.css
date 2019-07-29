@@ -5,6 +5,30 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+.custom-search-form {
+  width: 19rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+
+
+
+.login-panel {
+  padding-top: 4rem;
+  padding-left: 20rem !important;
+  width: 55% !important ;
+}
+
+
+.top-bar {
+  width: 100%;
+  height: 3.5rem;
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+}
+
 .landing-card {
   text-align: center;
 }
@@ -25,9 +49,7 @@ li {
   height: 100% !important;
 }
 
-.login-card {
-  padding-top: 4rem;
-}
+
 
 .sign-up-link {
   text-align: center;
