@@ -12,7 +12,7 @@ class Home extends React.Component {
         this.state = {
             resourceTypeName: '',
             resourceTypeDescription: '',
-            userId: window.sessionStorage.getItem("userId")
+            userId: ''
 
         };
 
@@ -25,10 +25,10 @@ class Home extends React.Component {
     handleSubmit(event){
         event.preventDefault();
         axios.post(ip+'/resource_types/create_resource_type',
-            {
+            querystring.stringify({
                 userId: this.state.userId,
                 resourceTypeName: this.state.resourceTypeName,
-                resourceTypeDescription: this.state.resourceTypeDescription}
+                resourceTypeDescription: this.state.resourceTypeDescription})
 
         )
             .then((response) => {
@@ -38,7 +38,6 @@ class Home extends React.Component {
                 //handle error
                 console.log(response);
             });
-
     }
 
 
@@ -53,6 +52,9 @@ class Home extends React.Component {
     }
 
 
+    componentDidMount() {
+        this.state.userId = window.sessionStorage.getItem("userId");
+    }
 
     render() {
         return (
@@ -63,7 +65,7 @@ class Home extends React.Component {
                         <SideBar/>
                     </div>
 
-                        <div className="col-md-4 login-panel">
+                        <div className="col-md-4 landing-card">
                             <div className=" panel panel-default">
                                 <div className="panel-heading">
                                     <h3 className="panel-title">Resource Types</h3>
