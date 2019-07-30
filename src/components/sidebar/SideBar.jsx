@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import { Route , withRouter} from 'react-router-dom';
+import { FaCogs, FaCog, FaSearch, FaList } from 'react-icons/fa';
 
 
 class Sidebar extends Component {
@@ -13,6 +15,12 @@ class Sidebar extends Component {
             thirdLevelDropdownCollapsed: true,
             samplePagesCollapsed: true,
         };
+
+        this.mainPartionsConfigClicked = this.mainPartionsConfigClicked.bind(this);
+    }
+
+    mainPartionsConfigClicked() {
+        this.props.history.push('/main-partitions-config');
     }
 
     render() {
@@ -25,10 +33,72 @@ class Sidebar extends Component {
                                 <input type="text" className="form-control" placeholder="Search..." />
                                 <span className="input-group-btn">
                   <button className="btn btn-default" type="button">
-                    <i className="fa fa-search" />
+                    <FaSearch />
                   </button>
                 </span>
                             </div>
+                        </li>
+
+                        <li className={classNames({ active: !this.state.multiLevelDropdownCollapsed })}>
+                            <a
+                                href=""
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({
+                                        multiLevelDropdownCollapsed: !this.state.multiLevelDropdownCollapsed,
+                                    });
+                                    return false;
+                                }}
+                            >
+                                <FaCogs />
+                                &nbsp;Library Configurations
+                                <span className="fa arrow" />
+                            </a>
+                            <ul
+                                className={
+                                    classNames({
+                                        'nav nav-second-level': true, collapse: this.state.multiLevelDropdownCollapsed,
+                                    })}
+                            >
+                                {/*<li className="second-level">*/}
+                                {/*    <a href="" onClick={(e) => { e.preventDefault(); }}>Second Level Item</a>*/}
+                                {/*</li>*/}
+                                {/*<li className="second-level">*/}
+                                {/*    <a href="" onClick={(e) => { e.preventDefault(); }}>Second Level Item</a>*/}
+                                {/*</li>*/}
+                                <li className={classNames({ active: !this.state.thirdLevelDropdownCollapsed })+" "+"second-level"}>
+                                    <a
+                                        href=""
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            this.setState({
+                                                thirdLevelDropdownCollapsed: !this.state.thirdLevelDropdownCollapsed,
+                                            });
+
+                                            return false;
+                                        }}
+                                    >
+                                        Library Partitions<span className="fa arrow" />
+                                    </a>
+                                    <ul
+                                        className={
+                                            classNames({
+                                                'nav nav-second-level': true,
+                                                collapse: this.state.thirdLevelDropdownCollapsed,
+                                            })}
+                                    >
+                                        <li className="third-level">
+                                            <a href="" onClick={(e) => { e.preventDefault();
+
+                                            this.mainPartionsConfigClicked();
+                                            }}>Main Partitions</a>
+                                        </li>
+                                        <li className="third-level">
+                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Sub-Partitions</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
 
                         <li className="list-class">
@@ -140,69 +210,7 @@ class Sidebar extends Component {
                             </ul>
                         </li>
 
-                        <li className={classNames({ active: !this.state.multiLevelDropdownCollapsed })}>
-                            <a
-                                href=""
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    this.setState({
-                                        multiLevelDropdownCollapsed: !this.state.multiLevelDropdownCollapsed,
-                                    });
-                                    return false;
-                                }}
-                            >
-                                <i className="fa fa-sitemap fa-fw" />
-                                &nbsp;Multi-Level Dropdown
-                                <span className="fa arrow" />
-                            </a>
-                            <ul
-                                className={
-                                    classNames({
-                                        'nav nav-second-level': true, collapse: this.state.multiLevelDropdownCollapsed,
-                                    })}
-                            >
-                                <li className="second-level">
-                                    <a href="" onClick={(e) => { e.preventDefault(); }}>Second Level Item</a>
-                                </li>
-                                <li className="second-level">
-                                    <a href="" onClick={(e) => { e.preventDefault(); }}>Second Level Item</a>
-                                </li>
-                                <li className={classNames({ active: !this.state.thirdLevelDropdownCollapsed })}>
-                                    <a
-                                        href=""
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            this.setState({
-                                                thirdLevelDropdownCollapsed: !this.state.thirdLevelDropdownCollapsed,
-                                            });
-                                            return false;
-                                        }}
-                                    >
-                                        Third Level<span className="fa arrow" />
-                                    </a>
-                                    <ul
-                                        className={
-                                            classNames({
-                                                'nav nav-second-level': true,
-                                                collapse: this.state.thirdLevelDropdownCollapsed,
-                                            })}
-                                    >
-                                        <li>
-                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+
 
                         <li className={classNames({ active: !this.state.samplePagesCollapsed })}>
                             <a
@@ -250,4 +258,4 @@ class Sidebar extends Component {
 }
 
 
-export default Sidebar;
+export default withRouter(Sidebar);

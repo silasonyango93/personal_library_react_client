@@ -5,6 +5,8 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+
+
 .modal-title {
   padding-top: 1rem;
   text-align: center;
@@ -65,6 +67,10 @@
 
 .second-level {
   padding-left: 2rem;
+}
+
+.third-level {
+    padding-left: 3rem;
 }
 
 li {

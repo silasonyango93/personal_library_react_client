@@ -7,13 +7,13 @@ import TopBar from "../../components/topbar/TopBar.jsx";
 import Modal from 'react-awesome-modal';
 import SuccessTick from "../../assets/success-tick.png";
 
-class Home extends React.Component {
+class LibraryPartitions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             visible : false,
-            resourceTypeName: '',
-            resourceTypeDescription: '',
+            partitionRefNo: '',
+            partitionDescription: '',
             userId: ''
 
         };
@@ -39,11 +39,11 @@ class Home extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
-        axios.post(ip+'/resource_types/create_resource_type',
+        axios.post(ip+'/library_partitions/create_library_partition',
             querystring.stringify({
                 userId: this.state.userId,
-                resourceTypeName: this.state.resourceTypeName,
-                resourceTypeDescription: this.state.resourceTypeDescription})
+                partitionRefNo: this.state.partitionRefNo,
+                partitionDescription: this.state.partitionDescription})
 
         )
             .then((response) => {
@@ -80,33 +80,33 @@ class Home extends React.Component {
                         <SideBar/>
                     </div>
 
-                        <div className="col-md-4 landing-card">
-                            <div className=" panel panel-default">
-                                <div className="panel-heading">
-                                    <h3 className="panel-title">Resource Types</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
-                                        <fieldset>
+                    <div className="col-md-4 landing-card">
+                        <div className=" panel panel-default">
+                            <div className="panel-heading">
+                                <h3 className="panel-title">Library Partitions</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
+                                    <fieldset>
 
-                                            <div className="form-group">
-                                                <input name="resourceTypeName" className="form-control"
-                                                       placeholder="E.g Book, DVD etc" value={this.state.resourceTypeName} type="text"
-                                                       onChange={this.handleChange} autoFocus required={true}/>
-                                            </div>
+                                        <div className="form-group">
+                                            <input name="partitionRefNo" className="form-control"
+                                                   placeholder="E.g A, B , 1 , B3" value={this.state.partitionRefNo} type="text"
+                                                   onChange={this.handleChange} autoFocus required={true}/>
+                                        </div>
 
-                                            <div className="form-group">
-                                                <textarea name="resourceTypeDescription" className="form-control"
-                                                       placeholder="Further description describing the category" value={this.state.resourceTypeDescription} type="text"
-                                                       onChange={this.handleChange} autoFocus required={true}/>
-                                            </div>
+                                        <div className="form-group">
+                                                <textarea name="partitionDescription" className="form-control"
+                                                          placeholder="E.g Top right corner of the shelf" value={this.state.partitionDescription} type="text"
+                                                          onChange={this.handleChange} autoFocus required={true}/>
+                                        </div>
 
-                                            <button type="submit" className="btn btn-lg btn-success btn-block">Submit</button>
-                                        </fieldset>
-                                    </form>
-                                </div>
+                                        <button type="submit" className="btn btn-lg btn-success btn-block">Submit</button>
+                                    </fieldset>
+                                </form>
                             </div>
                         </div>
+                    </div>
 
                 </div>
 
@@ -124,4 +124,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+export default LibraryPartitions;
