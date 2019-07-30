@@ -75,7 +75,7 @@ class Register extends React.Component {
     render() {
         return (
             <div>
-                <div className="container login-card">
+                <div className="container user-login-card">
                     <div className="row">
                         <div className="col-md-4 col-md-offset-4">
                             <div className="login-panel panel panel-default">

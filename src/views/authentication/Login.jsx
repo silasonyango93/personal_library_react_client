@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import querystring from "querystring";
 import ip from "../../config/EndPoint.js";
+import SuccessModal from "../../components/modals/success-modal/SuccessModal";
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -57,7 +59,9 @@ class Login extends React.Component {
                 if(response.data.success === true) {
 
                     window.sessionStorage.setItem("userId", response.data.userDetails.user);
+
                     this.successfulLogin();
+                    return
                 }else {  alert("Wrong user name or password");}
             } )
             .catch((response) => {
@@ -86,10 +90,11 @@ class Login extends React.Component {
     }
 
 
+
     render() {
         return (
             <div>
-                <div className="container login-card">
+                <div className="container user-login-card">
                     <div className="row">
                         <div className="col-md-4 col-md-offset-4">
                             <div className="login-panel panel panel-default">
@@ -103,11 +108,11 @@ class Login extends React.Component {
                                             <div className="form-group">
                                                 <input name="attemptedEmail" className="form-control"
                                                        placeholder="Email" value={this.state.attemptedEmail} type="text"
-                                                       onChange={this.handleChange} autoFocus/>
+                                                       onChange={this.handleChange} autoFocus required={true}/>
                                             </div>
 
                                             <div className="form-group">
-                                                <input name="attemptedPassword" className="form-control" placeholder="Password" value={this.state.attemptedPassword} type="password" onChange={this.handleChange} />
+                                                <input name="attemptedPassword" className="form-control" placeholder="Password" value={this.state.attemptedPassword} type="password" onChange={this.handleChange} required={true}/>
                                             </div>
 
                                             <button type="submit" className="btn btn-lg btn-success btn-block">Sign In</button>

@@ -5,22 +5,38 @@ import querystring from "querystring";
 import ip from "../../config/EndPoint.js";
 import SideBar from "../../components/sidebar/SideBar.jsx";
 import TopBar from "../../components/topbar/TopBar.jsx";
+import Modal from 'react-awesome-modal';
+import SuccessTick from "../../assets/success-tick.png";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible : false,
             resourceTypeName: '',
             resourceTypeDescription: '',
             userId: ''
 
         };
 
-
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
+
+    openModal() {
+        this.setState({
+            visible : true
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            visible : false
+        });
+    }
 
     handleSubmit(event){
         event.preventDefault();
@@ -32,7 +48,7 @@ class Home extends React.Component {
 
         )
             .then((response) => {
-                console.log(response);
+                this.openModal();
             } )
             .catch((response) => {
                 //handle error
@@ -77,13 +93,13 @@ class Home extends React.Component {
                                             <div className="form-group">
                                                 <input name="resourceTypeName" className="form-control"
                                                        placeholder="E.g Book, DVD etc" value={this.state.resourceTypeName} type="text"
-                                                       onChange={this.handleChange} autoFocus/>
+                                                       onChange={this.handleChange} autoFocus required={true}/>
                                             </div>
 
                                             <div className="form-group">
                                                 <textarea name="resourceTypeDescription" className="form-control"
                                                        placeholder="Further description describing the category" value={this.state.resourceTypeDescription} type="text"
-                                                       onChange={this.handleChange} autoFocus/>
+                                                       onChange={this.handleChange} autoFocus required={true}/>
                                             </div>
 
                                             <button type="submit" className="btn btn-lg btn-success btn-block">Submit</button>
@@ -95,6 +111,14 @@ class Home extends React.Component {
 
                 </div>
 
+                <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                    <div className="success-modal-header">
+                        <p className="modal-title">Success</p>
+                    </div>
+                    <div className="modal-content-wrapper">
+                        <img className="success-tick" src={SuccessTick} alt="Success" />
+                    </div>
+                </Modal>
 
             </div>
         );
