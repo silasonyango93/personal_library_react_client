@@ -6,15 +6,17 @@ import SideBar from "../../components/sidebar/SideBar.jsx";
 import TopBar from "../../components/topbar/TopBar.jsx";
 import Modal from 'react-awesome-modal';
 import SuccessTick from "../../assets/success-tick.png";
+import Select from "react-select";
 
-class LibraryPartitions extends React.Component {
+class SubPartitions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             visible : false,
-            partitionRefNo: '',
-            partitionDescription: '',
-            userId: ''
+            partitionIds: [],
+            SelectedPartitionId: '',
+            subPartitionRefNo: '',
+            subPartitionDescription: ''
 
         };
 
@@ -22,6 +24,7 @@ class LibraryPartitions extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getAllLibraryPartitions = this.getAllLibraryPartitions.bind(this);
     }
 
 
@@ -68,11 +71,42 @@ class LibraryPartitions extends React.Component {
 
 
     componentDidMount() {
-        this.setState({
-            ...this.state,
-            userId: window.sessionStorage.getItem("userId")
+
+        this.setState({userId: window.sessionStorage.getItem("userId")}, () => {
+
+            this.getAllLibraryPartitions();
+
         });
     }
+
+    getAllLibraryPartitions() {
+        axios.post(ip+'/library_partitions/get_all_partitions')
+            .then((response) => {
+                let jsonArray=[];
+                let jsonObject= null;
+
+                response.data.forEach((item) => {
+
+                    jsonObject={value:item.partitionId,label:item.partitionRefNo}
+                    jsonArray.push(jsonObject);
+
+                });
+
+                return jsonArray;
+            } )
+            .then((jsonArray) => {
+                this.setState({
+                    ...this.state,
+                    partitionIds: jsonArray
+                });
+            })
+            .catch((response) => {
+                //handle error
+                console.log(response);
+            });
+    }
+
+
 
     render() {
         return (
@@ -86,11 +120,30 @@ class LibraryPartitions extends React.Component {
                     <div className="col-md-4 landing-card">
                         <div className=" panel panel-default">
                             <div className="panel-heading">
-                                <h3 className="panel-title">Library Partitions</h3>
+                                <h3 className="panel-title">Library Sub-Partitions</h3>
                             </div>
                             <div class="panel-body">
                                 <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
                                     <fieldset>
+
+                                        <div className="form-group">
+                                            <Select
+                                                className="react-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Select Term"
+                                                name="SelectPartition"
+                                                closeMenuOnSelect={true}
+                                                value={this.state.SelectedPartitionId}
+                                                onChange={value =>
+                                                    this.setState({
+                                                        ...this.state,
+                                                        SelectedPartitionId: value
+                                                    })
+
+                                                }
+                                                options={this.state.partitionIds}
+                                            />
+                                        </div>
 
                                         <div className="form-group">
                                             <input name="partitionRefNo" className="form-control"
@@ -127,4 +180,4 @@ class LibraryPartitions extends React.Component {
     }
 }
 
-export default LibraryPartitions;
+export default SubPartitions;

@@ -17,10 +17,15 @@ class Sidebar extends Component {
         };
 
         this.mainPartionsConfigClicked = this.mainPartionsConfigClicked.bind(this);
+        this.subPartionsConfigClicked = this.subPartionsConfigClicked.bind(this);
     }
 
     mainPartionsConfigClicked() {
         this.props.history.push('/main-partitions-config');
+    }
+
+    subPartionsConfigClicked() {
+        this.props.history.push('/subpartitions-config');
     }
 
     render() {
@@ -94,7 +99,11 @@ class Sidebar extends Component {
                                             }}>Main Partitions</a>
                                         </li>
                                         <li className="third-level">
-                                            <a href="" onClick={(e) => { e.preventDefault(); }}>Sub-Partitions</a>
+                                            <a href="" onClick={(e) => { e.preventDefault();
+
+                                                this.subPartionsConfigClicked();
+                                            }
+                                            }>Sub-Partitions</a>
                                         </li>
                                     </ul>
                                 </li>

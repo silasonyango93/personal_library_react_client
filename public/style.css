@@ -5,7 +5,9 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
-
+.react-select {
+  text-align: start;
+}
 
 .modal-title {
   padding-top: 1rem;

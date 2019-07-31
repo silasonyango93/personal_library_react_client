@@ -68,7 +68,10 @@ class Home extends React.Component {
 
 
     componentDidMount() {
-        this.state.userId = window.sessionStorage.getItem("userId");
+        this.setState({
+            ...this.state,
+            userId: window.sessionStorage.getItem("userId")
+        });
     }
 
     render() {

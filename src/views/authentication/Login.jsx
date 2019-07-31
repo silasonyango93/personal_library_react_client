@@ -61,7 +61,7 @@ class Login extends React.Component {
                     window.sessionStorage.setItem("userId", response.data.userDetails.user);
 
                     this.successfulLogin();
-                    return
+
                 }else {  alert("Wrong user name or password");}
             } )
             .catch((response) => {
