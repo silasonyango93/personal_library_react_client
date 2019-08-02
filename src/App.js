@@ -6,6 +6,7 @@ import Login from './views/authentication/Login.jsx';
 import Home from './views/home/Home.jsx';
 import LibraryPartitions from './views/library_partitions/LibraryPartitions.jsx';
 import SubPartitions from './views/library_partitions/SubPartitions';
+import LibraryFieldsConfig from './views/library_fields/LibraryFieldsConfig';
 
 
 
@@ -21,6 +22,7 @@ class App extends Component {
                 <Route path="/home" component={Home} />
                 <Route path="/main-partitions-config" component={LibraryPartitions} />
                 <Route path="/subpartitions-config" component={SubPartitions} />
+                <Route path="/fields-config" component={LibraryFieldsConfig} />
 
 		        
 		        

@@ -6,17 +6,15 @@ import SideBar from "../../components/sidebar/SideBar.jsx";
 import TopBar from "../../components/topbar/TopBar.jsx";
 import Modal from 'react-awesome-modal';
 import SuccessTick from "../../assets/success-tick.png";
-import Select from "react-select";
 
-class SubPartitions extends React.Component {
+class LibraryFieldsConfig extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             visible : false,
-            partitionIds: [],
-            SelectedPartitionId: '',
-            subPartitionRefNo: '',
-            subPartitionDescription: ''
+            userId: '',
+            fieldName: '',
+            fieldDescription: ''
 
         };
 
@@ -24,7 +22,6 @@ class SubPartitions extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.getAllLibraryPartitions = this.getAllLibraryPartitions.bind(this);
     }
 
 
@@ -42,11 +39,11 @@ class SubPartitions extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
-        axios.post(ip+'/subpartitions/create_subpartition',
+        axios.post(ip+'/library_fields/create_library_field',
             querystring.stringify({
-                partitionId: this.state.SelectedPartitionId.value,
-                subPartitionRefNo: this.state.subPartitionRefNo,
-                subPartitionDescription: this.state.subPartitionDescription})
+                userId: window.sessionStorage.getItem("userId"),
+                fieldName: this.state.fieldName,
+                fieldDescription: this.state.fieldDescription})
 
         )
             .then((response) => {
@@ -71,42 +68,11 @@ class SubPartitions extends React.Component {
 
 
     componentDidMount() {
-
-        this.setState({userId: window.sessionStorage.getItem("userId")}, () => {
-
-            this.getAllLibraryPartitions();
-
+        this.setState({
+            ...this.state,
+            userId: window.sessionStorage.getItem("userId")
         });
     }
-
-    getAllLibraryPartitions() {
-        axios.post(ip+'/library_partitions/get_all_partitions')
-            .then((response) => {
-                let jsonArray=[];
-                let jsonObject= null;
-
-                response.data.forEach((item) => {
-
-                    jsonObject={value:item.partitionId,label:item.partitionRefNo}
-                    jsonArray.push(jsonObject);
-
-                });
-
-                return jsonArray;
-            } )
-            .then((jsonArray) => {
-                this.setState({
-                    ...this.state,
-                    partitionIds: jsonArray
-                });
-            })
-            .catch((response) => {
-                //handle error
-                console.log(response);
-            });
-    }
-
-
 
     render() {
         return (
@@ -120,40 +86,21 @@ class SubPartitions extends React.Component {
                     <div className="col-md-4 landing-card">
                         <div className=" panel panel-default">
                             <div className="panel-heading">
-                                <h3 className="panel-title">Library Sub-Partitions</h3>
+                                <h3 className="panel-title">Library Fields</h3>
                             </div>
                             <div class="panel-body">
                                 <form action="" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
                                     <fieldset>
 
                                         <div className="form-group">
-                                            <Select
-                                                className="react-select"
-                                                classNamePrefix="react-select"
-                                                placeholder="Select Parent Partition"
-                                                name="SelectedPartitionId"
-                                                closeMenuOnSelect={true}
-                                                value={this.state.SelectedPartitionId}
-                                                onChange={value =>
-                                                    this.setState({
-                                                        ...this.state,
-                                                        SelectedPartitionId: value
-                                                    })
-
-                                                }
-                                                options={this.state.partitionIds}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <input name="subPartitionRefNo" className="form-control"
-                                                   placeholder="E.g A, B , 1 , B3" value={this.state.subPartitionRefNo} type="text"
+                                            <input name="fieldName" className="form-control"
+                                                   placeholder="E.g Mathematics, Science" value={this.state.fieldName} type="text"
                                                    onChange={this.handleChange} autoFocus required={true}/>
                                         </div>
 
                                         <div className="form-group">
-                                                <textarea name="subPartitionDescription" className="form-control"
-                                                          placeholder="E.g Top right corner of the shelf" value={this.state.subPartitionDescription} type="text"
+                                                <textarea name="fieldDescription" className="form-control"
+                                                          placeholder="E.g Is for all Mathematics" value={this.state.fieldDescription} type="text"
                                                           onChange={this.handleChange} autoFocus required={true}/>
                                         </div>
 
@@ -180,4 +127,4 @@ class SubPartitions extends React.Component {
     }
 }
 
-export default SubPartitions;
+export default LibraryFieldsConfig;

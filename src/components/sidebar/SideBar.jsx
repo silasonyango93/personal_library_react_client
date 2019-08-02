@@ -18,6 +18,7 @@ class Sidebar extends Component {
 
         this.mainPartionsConfigClicked = this.mainPartionsConfigClicked.bind(this);
         this.subPartionsConfigClicked = this.subPartionsConfigClicked.bind(this);
+        this.libraryFieldsConfigClicked = this.libraryFieldsConfigClicked.bind(this);
     }
 
     mainPartionsConfigClicked() {
@@ -26,6 +27,10 @@ class Sidebar extends Component {
 
     subPartionsConfigClicked() {
         this.props.history.push('/subpartitions-config');
+    }
+
+    libraryFieldsConfigClicked() {
+        this.props.history.push('/fields-config');
     }
 
     render() {
@@ -106,6 +111,10 @@ class Sidebar extends Component {
                                             }>Sub-Partitions</a>
                                         </li>
                                     </ul>
+                                </li>
+
+                                <li className="second-level">
+                                    <a href="" onClick={(e) => { e.preventDefault(); this.libraryFieldsConfigClicked();}}>Library Fields</a>
                                 </li>
                             </ul>
                         </li>
