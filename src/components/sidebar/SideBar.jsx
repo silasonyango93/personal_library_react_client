@@ -13,12 +13,14 @@ class Sidebar extends Component {
             chartsElementsCollapsed: true,
             multiLevelDropdownCollapsed: true,
             thirdLevelDropdownCollapsed: true,
+            brandDropdownCollapsed: true,
             samplePagesCollapsed: true,
         };
 
         this.mainPartionsConfigClicked = this.mainPartionsConfigClicked.bind(this);
         this.subPartionsConfigClicked = this.subPartionsConfigClicked.bind(this);
         this.libraryFieldsConfigClicked = this.libraryFieldsConfigClicked.bind(this);
+        this.brandRegistration = this.brandRegistration.bind(this);
     }
 
     mainPartionsConfigClicked() {
@@ -31,6 +33,10 @@ class Sidebar extends Component {
 
     libraryFieldsConfigClicked() {
         this.props.history.push('/fields-config');
+    }
+
+    brandRegistration() {
+        this.props.history.push('/brand-registration');
     }
 
     render() {
@@ -115,6 +121,37 @@ class Sidebar extends Component {
 
                                 <li className="second-level">
                                     <a href="" onClick={(e) => { e.preventDefault(); this.libraryFieldsConfigClicked();}}>Library Fields</a>
+                                </li>
+
+                                <li className={classNames({ active: !this.state.thirdLevelDropdownCollapsed })+" "+"second-level"}>
+                                    <a
+                                        href=""
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            this.setState({
+                                                brandDropdownCollapsed: !this.state.brandDropdownCollapsed,
+                                            });
+
+                                            return false;
+                                        }}
+                                    >
+                                        Brand Configurations<span className="fa arrow" />
+                                    </a>
+                                    <ul
+                                        className={
+                                            classNames({
+                                                'nav nav-second-level': true,
+                                                collapse: this.state.brandDropdownCollapsed,
+                                            })}
+                                    >
+                                        <li className="third-level">
+                                            <a href="" onClick={(e) => { e.preventDefault();
+
+                                                this.brandRegistration();
+                                            }}>Brand Registration</a>
+                                        </li>
+
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
